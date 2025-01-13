@@ -1,4 +1,3 @@
-import 'package:alhilal_store/features/auth/login/presentation/view/login_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +27,9 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp.router(
+          localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
           routerConfig: AppRouters.router,
           debugShowCheckedModeBanner: false,
           title: 'Al-Hilal Store',
