@@ -1,14 +1,19 @@
+import 'dart:developer';
+
 import 'package:alhilal_store/core/constants/assets.dart';
+import 'package:alhilal_store/core/constants/validator.dart';
+import 'package:alhilal_store/core/router/app_router.dart';
 import 'package:alhilal_store/core/style/app_colors.dart';
+import 'package:alhilal_store/core/widget/custom_alert_diaglo.dart';
 import 'package:alhilal_store/core/widget/custom_back_button.dart';
 import 'package:alhilal_store/core/widget/custom_buttons.dart';
 import 'package:alhilal_store/core/widget/custom_text_field.dart';
 import 'package:alhilal_store/core/widget/custom_title_text.dart';
 import 'package:alhilal_store/core/widget/custome_subtitle_text.dart';
-import 'package:alhilal_store/features/auth/login/presentation/view/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -21,6 +26,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool obscureText = true;
+  bool obscureTextConfirm = true;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -33,31 +39,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final FocusNode _passwordFoucsNode = FocusNode();
   final FocusNode _confirmPasswordFoucsNode = FocusNode();
 
-  
-
   Future signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    if (googleUser == null) {
-      return;
+      if (googleUser == null) {
+        return;
+      }
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      GoRouter.of(context).pushReplacement(
+        AppRouters.kforgetPasswordScreen,
+      );
+    } on Exception catch (e) {
+      log(e.toString());
     }
-
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser.authentication;
-
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-      (route) => false,
-    );
   }
 
   @override
@@ -99,6 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 controller: _nameController,
                 focusNode: _nameFoucsNode,
+                validator: MyValidators.displayNameValidator,
                 hintText: "Enter your Name",
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(
@@ -117,6 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 controller: _phoneController,
                 focusNode: _phoneFoucsNode,
+                validator: MyValidators.phoneNumberValidator,
                 hintText: "Enter your Phone",
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -135,6 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 controller: _emailController,
                 focusNode: _emailFoucsNode,
+                validator: MyValidators.emailValidator,
                 hintText: "example@example.com",
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
@@ -153,6 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 controller: _passwordController,
                 focusNode: _passwordFoucsNode,
+                validator: MyValidators.passwordValidator,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: obscureText,
                 hintText: "***********",
@@ -182,19 +190,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 controller: _confirmPasswordController,
                 focusNode: _confirmPasswordFoucsNode,
+                validator: (value) => MyValidators.repeatPasswordValidator(
+                  Password: _passwordController.text,
+                  value: value,
+                ),
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: obscureText,
+                obscureText: obscureTextConfirm,
                 hintText: "***********",
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        obscureText = !obscureText;
+                        obscureTextConfirm = !obscureTextConfirm;
                       });
                     },
                     icon: Icon(
-                      obscureText ? Icons.visibility : Icons.visibility_off,
+                      obscureTextConfirm
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                     ),
                   ),
                 ),
@@ -211,7 +225,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 textColor: Colors.white,
                 backgroundColor: AppColors.primaryColor,
                 fontSize: 14,
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomAlertDiaglo(
+                      image: Assets.assetsImgsDialogPlayer,
+                      message: 'Account created is successfully',
+                      onContinue: () {
+                        GoRouter.of(context)
+                            .pushReplacement(AppRouters.koptScreen);
+                      },
+                      buttonText: "Continue",
+                    ),
+                  );
+                },
                 width: w * 1.0,
                 height: 50,
               ),
@@ -265,12 +292,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginScreen(),
-                                ),
-                                (route) => false,
+                              GoRouter.of(context).pushReplacement(
+                                AppRouters.kloginRoute,
                               );
                             },
                         ),
@@ -286,6 +309,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-
-
-

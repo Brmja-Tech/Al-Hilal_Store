@@ -1,11 +1,10 @@
 import 'package:alhilal_store/core/constants/assets.dart';
+import 'package:alhilal_store/core/router/app_router.dart';
 import 'package:alhilal_store/core/widget/custom_buttons.dart';
 import 'package:alhilal_store/core/widget/custom_title_text.dart';
 import 'package:alhilal_store/core/widget/custome_subtitle_text.dart';
-import 'package:alhilal_store/features/auth/login/presentation/view/login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:go_router/go_router.dart';
 
 class StartedScreen extends StatefulWidget {
   const StartedScreen({super.key});
@@ -19,7 +18,7 @@ class _StartedScreenState extends State<StartedScreen> {
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
+    // final h = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: w * 0.03),
@@ -52,12 +51,8 @@ class _StartedScreenState extends State<StartedScreen> {
               onPressed: selectedLanguage == null
                   ? null
                   : () async {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                        (route) => false,
+                      GoRouter.of(context).pushReplacement(
+                        AppRouters.kloginRoute,
                       );
                       // GoogleSignIn googleSignIn = GoogleSignIn();
                       // googleSignIn.disconnect();

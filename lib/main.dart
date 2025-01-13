@@ -10,11 +10,12 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   runApp(EasyLocalization(
-      supportedLocales: [Locale('ar', 'en')],
+      supportedLocales: [Locale('ar'), Locale('en')],
       path: 'assets/lang',
-      fallbackLocale: Locale('ar', 'en'),
-      
-      child: MyApp()));
+      fallbackLocale: Locale('ar'),
+      saveLocale: true,
+      useOnlyLangCode: true,
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,8 +31,8 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp.router(
           localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           routerConfig: AppRouters.router,
           debugShowCheckedModeBanner: false,
           title: 'Al-Hilal Store',

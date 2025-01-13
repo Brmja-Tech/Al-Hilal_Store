@@ -1,3 +1,5 @@
+import 'package:alhilal_store/core/constants/validator.dart';
+import 'package:alhilal_store/core/router/app_router.dart';
 import 'package:alhilal_store/core/style/app_colors.dart';
 import 'package:alhilal_store/core/widget/custom_back_button.dart';
 import 'package:alhilal_store/core/widget/custom_buttons.dart';
@@ -5,6 +7,7 @@ import 'package:alhilal_store/core/widget/custom_text_field.dart';
 import 'package:alhilal_store/core/widget/custom_title_text.dart';
 import 'package:alhilal_store/core/widget/custome_subtitle_text.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgetPassword extends StatelessWidget {
   ForgetPassword({super.key});
@@ -40,32 +43,33 @@ class ForgetPassword extends StatelessWidget {
             SizedBox(height: 50),
             CustomTextField(
               controller: _emailController,
+              validator: MyValidators.emailValidator,
               focusNode: _emailFoucsNode,
               hintText: 'xxxxxxxxxx',
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none
-                )
-              ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none)),
             ),
             SizedBox(height: 30),
             CustomButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                text: "Reset Password",
-                textColor: Colors.white,
-                backgroundColor: AppColors.primaryColor,
-                fontSize: 14,
-                onPressed: () {},
-                width: w * 05,
-                height: 50,
               ),
+              text: "Reset Password",
+              textColor: Colors.white,
+              backgroundColor: AppColors.primaryColor,
+              fontSize: 14,
+              onPressed: () {
+                GoRouter.of(context).pushReplacement(AppRouters.koptScreen);
+              },
+              width: w * 05,
+              height: 50,
+            ),
           ],
         ),
       ),

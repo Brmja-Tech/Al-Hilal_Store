@@ -1,5 +1,6 @@
 import 'package:alhilal_store/core/widget/custome_subtitle_text.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class BackButtonWidget extends StatelessWidget {
   final Color iconColor;
@@ -17,7 +18,7 @@ class BackButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
+        GoRouter.of(context).pop();
       },
       child: Container(
         height: size,
