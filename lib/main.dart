@@ -13,6 +13,7 @@ Future<void> main() async {
       supportedLocales: [Locale('ar', 'en')],
       path: 'assets/lang',
       fallbackLocale: Locale('ar', 'en'),
+      
       child: MyApp()));
 }
 
