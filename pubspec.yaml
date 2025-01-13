@@ -36,6 +36,7 @@ dependencies:
   firebase_storage: ^12.3.7
   flutter:
     sdk: flutter
+  go_router: ^14.6.3
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.2
   svg_flutter: ^0.0.1
