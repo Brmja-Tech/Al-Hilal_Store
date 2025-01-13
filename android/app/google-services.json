@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "349737721773",
+    "project_id": "al-hilal-store-80887",
+    "storage_bucket": "al-hilal-store-80887.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349737721773:android:61e3f97f9db5560ec68b24",
+        "android_client_info": {
+          "package_name": "com.example.alhilal_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349737721773-mc5otboavoed2r3jngb7mja4mas64o8m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alhilal_store",
+            "certificate_hash": "e83e9e662288d92c63935a38d3e1f3d2b3f8ffbf"
+          }
+        },
+        {
+          "client_id": "349737721773-vaks6usonovti8f1bl8uq2b50gtdajrp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYaHT5pfL0RmkTczVD7hb8bPJQt8OUbFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349737721773-vaks6usonovti8f1bl8uq2b50gtdajrp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
