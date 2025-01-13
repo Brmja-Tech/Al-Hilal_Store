@@ -1,3 +1,4 @@
+import 'package:alhilal_store/features/home/presentation/view/home_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/login/presentation/view/login_screen.dart';
@@ -10,9 +11,9 @@ abstract class AppRouters {
     routes: [
       GoRoute(
         path: kdefultRoute,
-        builder: (context, state) => const LoginScreen(),
+        builder: (context, state) => const HomeScreen(),
       ),
-       GoRoute(
+      GoRoute(
         path: khomeRoute,
         builder: (context, state) => const LoginScreen(),
       ),
