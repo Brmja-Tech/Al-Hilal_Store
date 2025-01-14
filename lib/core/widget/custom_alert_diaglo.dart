@@ -7,9 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomAlertDiaglo extends StatelessWidget {
   final String? image;
   final String? message;
-  final String? title;
   final String? buttonText;
-  final String? svgImage;
   final VoidCallback onContinue;
   const CustomAlertDiaglo({
     super.key,
@@ -17,8 +15,6 @@ class CustomAlertDiaglo extends StatelessWidget {
     this.message,
     required this.onContinue,
     this.buttonText,
-    this.svgImage,
-    this.title,
   });
 
   @override

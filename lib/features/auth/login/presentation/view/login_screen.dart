@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
-    GoRouter.of(context).pushReplacement(
+    GoRouter.of(context).push(
       AppRouters.kforgetPasswordScreen,
     );
   }
@@ -75,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: "Hello Again!",
                     fontSize: 32,
                     textAlign: TextAlign.center,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -149,14 +150,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: AlignmentDirectional.topEnd,
                   child: TextButton(
                     onPressed: () {
-                      GoRouter.of(context).pushReplacement(
+                      GoRouter.of(context).push(
                         AppRouters.kforgetPasswordScreen,
                       );
                     },
                     child: SubtitleTextWidget(
                       subText: "Forget Password?",
                       color: Color(0xff707B81),
-                      fontSize: 12,
+                      fontSize: 14,
                       textAlign: TextAlign.end,
                     ),
                   ),
@@ -229,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                GoRouter.of(context).pushReplacement(
+                                GoRouter.of(context).push(
                                   AppRouters.kSignUpScreen,
                                 );
                               },

@@ -1,6 +1,8 @@
+import 'package:alhilal_store/core/constants/assets.dart';
 import 'package:alhilal_store/core/constants/validator.dart';
 import 'package:alhilal_store/core/router/app_router.dart';
 import 'package:alhilal_store/core/style/app_colors.dart';
+import 'package:alhilal_store/core/widget/custom_alert_confirm_email.dart';
 import 'package:alhilal_store/core/widget/custom_back_button.dart';
 import 'package:alhilal_store/core/widget/custom_buttons.dart';
 import 'package:alhilal_store/core/widget/custom_text_field.dart';
@@ -65,7 +67,21 @@ class ForgetPassword extends StatelessWidget {
               backgroundColor: AppColors.primaryColor,
               fontSize: 14,
               onPressed: () {
-                GoRouter.of(context).pushReplacement(AppRouters.koptScreen);
+                showDialog(
+                  context: context,
+                  builder: (context) => CustomAlertConfirmation(
+                    image: Assets.assetsIconEmail,
+                    title: "Check your email",
+                    message:
+                        'We have send password recovery code in your email',
+                    onContinue: () {
+                      GoRouter.of(context)
+                          .push(AppRouters.koptScreen);
+                    },
+                    buttonText: "Ok",
+                  ),
+                );
+                // GoRouter.of(context).pushReplacement(AppRouters.koptScreen);
               },
               width: w * 05,
               height: 50,

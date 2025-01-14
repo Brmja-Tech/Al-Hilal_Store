@@ -11,9 +11,9 @@ abstract class AppRouters {
   static const kloginRoute = '/login';
   static const ksplashScreen = '/splash';
   static const koptScreen = '/otp';
-  static const kstartScreen = '/otp';
-  static const kSignUpScreen = '/otp';
-  static const kforgetPasswordScreen = '/otp';
+  static const kstartScreen = '/start';
+  static const kSignUpScreen = '/signuo';
+  static const kforgetPasswordScreen = '/forget';
 
   static final GoRouter router = GoRouter(
     routes: [
